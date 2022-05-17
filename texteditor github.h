@@ -12,28 +12,247 @@ using namespace std;
 
 
 
-void add_content(char name[81]) {
+void add_content(char name[81])
+{
 
 }
 
-void display(char name[81]){
+void display(char name[81])
+{
 
 }
 
 
-void clearall(char name[81]){
-
+void clearall(char name[81])
+{
 
 }
 
-void encrypt(char name[81]){
+void encrypt(char name[81])
+{
+
 }
-void decrypt(char name[81]){}
-void merge(char name[81]){}
-void count_words(char name[81]){}
-void count_chars(char name[81]){}
-void count_lines(char name[81]){}
-void search(char name[81]){}
+
+void decrypt(char name[81])
+{
+
+}
+
+void merge_files()
+{
+    fstream inputFile1, inputFile2;
+    char name1[81], name2[81];
+
+    cout << "Please, Enter your first file name: ";
+    while (true)
+    {
+        cin >> name1;
+        inputFile1.open(name1, ios::in);
+        if (inputFile1.fail())
+        {
+            cout << "File open error!" << endl;
+            cout << "Please, Enter correct file name: ";
+            cin >> name1;
+        }
+        else
+        {
+            cout << "File opened successful.\n";
+            cout << "Now reading information.\n";
+            break;
+        }
+    }
+
+    cout << "Please, Enter your secound file name : ";
+    while (true)
+    {
+        cin >> name2;
+        inputFile2.open(name2, ios::in);
+        if (inputFile2.fail())
+        {
+            cout << "File open error!" << endl;
+            cout << "Please, Enter correct file name: ";
+            cin >> name2;
+        }
+        else
+        {
+            cout << "File opened successful.\n";
+            cout << "Now reading information.\n";
+            break;
+        }
+    }
+
+    while (!inputFile1.eof())
+    {
+        inputFile1.getline(name1, 256, '\n');
+        cout << name1 << endl;
+    }
+
+    inputFile1.close();
+
+    while (!inputFile2.eof())
+    {
+        inputFile2.getline(name2, 256, '\n');
+        cout << name2 << endl;
+    }
+    inputFile2.close();
+}
+
+void count_words(char name[81])
+{
+    int k = 0;
+    ifstream inputFile;
+    string word;
+
+    cout << "Please, Enter your file name: ";
+    while (true)
+    {
+        cin >> name;
+        inputFile.open(name, ios::in);
+        if (inputFile.fail())
+        {
+            cout << "File open error!" << endl;
+            cout << "Please, Enter correct file name: ";
+            cin >> name;
+        }
+        else
+        {
+            cout << "File opened successful.\n";
+            cout << "Now reading information.\n";
+            break;
+        }
+    }
+
+    while (!inputFile.eof())
+    {
+        inputFile >> word;
+        k++;
+    }
+    cout << "Number of words = " << k;
+    inputFile.close();
+}
+
+void count_chars(char name[81])
+{
+    int k = 0;
+    ifstream inputFile;
+    char ch;
+
+    cout << "Please, Enter your file name: ";
+    while (true)
+    {
+        cin >> name;
+        inputFile.open(name, ios::in);
+        if (inputFile.fail())
+        {
+            cout << "File open error!" << endl;
+            cout << "Please, Enter correct file name: ";
+            cin >> name;
+        }
+        else
+        {
+            cout << "File opened successful.\n";
+            cout << "Now reading information.\n";
+            break;
+        }
+    }
+
+    while (!inputFile.eof())
+    {
+        inputFile >> ch;
+        if((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122))
+        k++;
+    }
+    k -= 1;
+    cout << "Number of letters = " << k;
+    inputFile.close();
+}
+
+void count_lines(char name[81])
+{
+    int k = 0;
+    ifstream inputFile;
+    string line;
+
+    cout << "Please, Enter your file name: ";
+    while (true)
+    {
+        cin >> name;
+        inputFile.open(name, ios::in);
+        if (inputFile.fail())
+        {
+            cout << "File open error!" << endl;
+            cout << "Please, Enter correct file name: ";
+            cin >> name;
+        }
+        else
+        {
+            cout << "File opened successful.\n";
+            cout << "Now reading information.\n";
+            break;
+        }
+    }
+
+    while (!inputFile.eof())
+    {
+        getline(inputFile, line);
+        k++;
+    }
+    cout << "Number of lines = " << k;
+    inputFile.close();
+}
+
+void search_for_word(char name[81])
+{
+    ifstream inputFile;
+    string word, temp;
+    char ser;
+    bool isFound = 0;
+
+    cout << "Please, Enter your file name: ";
+    while (true)
+    {
+        cin >> name;
+        inputFile.open(name, ios::in);
+        if (inputFile.fail())
+        {
+            cout << "File open error!" << endl;
+            cout << "Please, Enter correct file name: ";
+            cin >> name;
+        }
+        else
+        {
+            cout << "File opened successful.\n";
+            cout << "Now reading information.\n";
+            break;
+        }
+    }
+
+    cout << "Please, Enter the word you want to search for: ";
+    cin >> word;
+
+    while (getline(inputFile, temp))
+    {
+        if (temp.find(word) != string::npos)
+        {
+            isFound = 1;
+        }
+        else if (temp.find(word) != string::npos)
+        {
+            isFound = 0;
+        }
+    }
+
+    if (isFound == 1)
+    {
+        cout << "Word was found in the file";
+    }
+    else if (isFound == 0)
+    {
+        cout << "Word was not found in the file";
+    }
+
+    inputFile.close();
+}
 
 
 

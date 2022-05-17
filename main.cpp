@@ -49,7 +49,7 @@ int main(){
             else if (choice == 5)
                 decrypt(name);
             else if (choice == 6)
-                merge(name);
+                merge_files();
             else if (choice == 7)
                 count_words(name);
             else if (choice == 8)
@@ -57,7 +57,7 @@ int main(){
             else if (choice == 9)
                 count_lines(name);
             else if (choice == 10)
-                search(name);
+                search_for_word(name);
             else if (choice == 11)
                 count(name);
             else if (choice == 12)
