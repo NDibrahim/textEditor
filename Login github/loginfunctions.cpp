@@ -27,7 +27,8 @@ file.open("test1.txt", ios_base::app);
   conditions_message();
   pass = check_strong_password(pass);
   add_profile_to_system(pass);
-
+cout<<"      login      ";
+login_system();
  }
 
 file.close();

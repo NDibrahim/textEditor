@@ -27,4 +27,15 @@ void add_profile_to_system(string &pass);
 string ensure_password(string pass, string enpass);
 std::string takePasswdFromUser(string pass);
 string check_strong_password(string& pass);
+void operator<<(ostream &out, users temp);
+void operator<<(ostream &out , vector<char> coded);
+vector<users>  read(string name);
+void write_encrypted_pass(string name, vector<users> uservector);
+string cipher(string message);
+string decipher( string message);
+void encryption();
+bool take_password(vector<users> uservector , int l);
+bool take_id(vector<users> uservector);
+void login_system();
+users change_password();
 #endif // LOGINFUNCTIONS_H_INCLUDED

@@ -371,5 +371,174 @@ string check_strong_password(string& pass)
     return pass;
 }
 
+void operator<<(ostream &out, users temp){
+    out<<temp.name<<endl;
+    out<<temp.id<<endl;
+    out<<temp.email<<endl;
+    out<<temp.password<<endl;
+}
+
+
+
+void operator<<(ostream &out , vector<char> coded){
+    for (int i=0; i<coded.size(); i++){
+        cout<< coded[i];
+    }
+}
+
+
+
+
+
+
+
+
+vector<users>  read(string name){
+    fstream file;
+    vector<users> uservector;
+    file.open(name , ios:: in);
+    users temp;
+    while (!file.eof()){
+        getline(file , temp.name);
+        getline(file , temp.id);
+        getline(file , temp.email);
+        getline(file , temp.password);
+        uservector.push_back(temp);
+    }
+    file.close();
+    return uservector;
+}
+
+void write_encrypted_pass(string name, vector<users> uservector) {
+    fstream file;
+    file.open(name, ios::out);
+    file.clear();
+    for (int i = 0; i < uservector.size(); i++) {
+        file << uservector[i].name<<endl;
+        file << uservector[i].id<<endl;
+        file << uservector[i].email<<endl;
+        file << uservector[i].password<<endl;
+    }
+    file.close();
+
+}
+
+
+
+
+string cipher(string message){
+
+    string coded ={};
+    for (int i=0; i<message.size() ; i++){
+        coded.push_back(message[i]+5);
+    }
+
+    return coded;
+}
+
+string decipher( string message){
+    string decrypted ={};
+    for (int i=0; i<message.size() ; i++){
+        decrypted.push_back(message[i]-5);
+    }
+
+    return decrypted;
+}
+
+void encryption(){
+    vector<users> uservector = read("login5.txt");
+    for ( int i=0; i<uservector.size(); i++){
+        uservector[i].password = cipher( uservector[i].password);
+
+    }
+    write_encrypted_pass("login5.txt" , uservector);
+
+
+}
+
+bool take_password(vector<users> uservector , int l){
+    users m;
+    int attempts =1;
+    while(attempts<=3) {
+        cout<<"your password :\n";
+        cin >> m.password;
+        if (m.password == decipher(uservector[l].password)) {
+            cout<<"successful login!\n";
+            return true;
+        } else { cin.sync();
+            cout << "wrong password\n";
+            attempts++;
+        }
+
+    }
+    cout<<"access denied!\n";
+
+}
+
+bool take_id(vector<users> uservector) {
+    users m;
+    int l=0;
+    cout << "your id : \n";
+    cin >> m.id;
+    for(int j=0 ; j<uservector.size(); j++) {
+        if (m.id == uservector[j].id) {
+            l=j;
+            take_password(uservector , l);
+            return true;
+        }
+    }
+    return false;
+}
+
+void login_system() {
+    string name = "login5.txt";
+    vector<users> uservector = read(name);
+    while (take_id(uservector) != true) {
+        cout << "wrong id\n";
+        take_id(uservector);
+        break;
+
+    }
+}
+users change_password(){
+    vector<users> uservector = read("newpassword function.txt");
+    take_id(uservector);
+    users temp;
+    int l=0;
+    string newPassword , repeated_password;
+    cout<<"enter the old password:\n";
+    cin>>temp.password;
+    for(int i=0; i<uservector.size(); i++){
+        if(decipher(uservector[i].password)==temp.password){
+
+            cout<<"your new password :\n";
+            cin>>newPassword;
+            cout<<"confirm the new password :\n";
+            cin>>repeated_password;
+            if(newPassword==repeated_password){
+                l=i;
+                temp.newpassword= cipher(uservector[i].newpassword);
+                temp.name =uservector[i].name;
+                temp.id = uservector[i].id;
+                temp.email = uservector[i].email;
+                temp.password = uservector[i].password;
+
+                return temp;
+
+            }
+            else{cout<<"make sure you enter the same password next time \n";
+                break;
+
+            }
+
+        }
+    }
+    for(int i=0; i<uservector.size(); i++){
+        uservector[l].password = cipher(newPassword);
+    }
+
+}
+
+
 
 
